@@ -3,47 +3,43 @@ This is a clone of Simple OpenGL Image Library from http://lonesock.net/soil.htm
 I wanted to work with the code and seeing it was MIT license and the original svn repo is offline, I figured it was acceptable to post it here.
 
 Features:
+=========
 
-    * Readable Image Formats:
-          o BMP - non-1bpp, non-RLE (from stb_image documentation)
-          o PNG - non-interlaced (from stb_image documentation)
-          o JPG - JPEG baseline (from stb_image documentation)
-          o TGA - greyscale or RGB or RGBA or indexed, uncompressed or RLE
-          o DDS - DXT1/2/3/4/5, uncompressed, cubemaps (can't read 3D DDS files yet)
-          o PSD - (from stb_image documentation)
-          o HDR - converted to LDR, unless loaded with *HDR* functions (RGBE or RGBdivA or RGBdivA2) 
-    * Writeable Image Formats:
-          o TGA - Greyscale or RGB or RGBA, uncompressed
-          o BMP - RGB, uncompressed
-          o DDS - RGB as DXT1, or RGBA as DXT5 
-    * Can load an image file directly into a 2D OpenGL texture, optionally performing the following functions:
-          o Can generate a new texture handle, or reuse one specified
-          o Can automatically rescale the image to the next largest power-of-two size
-          o Can automatically create MIPmaps
-          o Can scale (not simply clamp) the RGB values into the "safe range" for NTSC displays (16 to 235, as recommended here)
-          o Can multiply alpha on load (for more correct blending / compositing)
-          o Can flip the image vertically
-          o Can compress and upload any image as DXT1 or DXT5 (if EXT_texture_compression_s3tc is available), using an internal (very fast!) compressor
-          o Can convert the RGB to YCoCg color space (useful with DXT5 compression: see this link from NVIDIA)
-          o Will automatically downsize a texture if it is larger than GL_MAX_TEXTURE_SIZE
-          o Can directly upload DDS files (DXT1/3/5/uncompressed/cubemap, with or without MIPmaps). Note: directly uploading the compressed DDS image will disable the other options (no flipping, no pre-multiplying alpha, no rescaling, no creation of MIPmaps, no auto-downsizing)
-          o Can load rectangluar textures for GUI elements or splash screens (requires GL_ARB/EXT/NV_texture_rectangle) 
-    * Can decompress images from RAM (e.g. via PhysicsFS or similar) into an OpenGL texture (same features as regular 2D textures, above)
-    * Can load cube maps directly into an OpenGL texture (same features as regular 2D textures, above)
-          o Can take six image files directly into an OpenGL cube map texture
-          o Can take a single image file where width = 6*height (or vice versa), split it into an OpenGL cube map texture 
-    * No external dependencies
-    * Tiny
-    * Cross platform (Windows, *nix, Mac OS X)
-    * Public Domain 
-
-ToDo:
-
-    * More testing
-    * add HDR functions to load from memory and load to RGBE unsigned char* 
-
+* Readable Image Formats:
+  o BMP - non-1bpp, non-RLE (from stb_image documentation)
+  o PNG - non-interlaced (from stb_image documentation)
+  o JPG - JPEG baseline (from stb_image documentation)
+  o TGA - greyscale or RGB or RGBA or indexed, uncompressed or RLE
+  o DDS - DXT1/2/3/4/5, uncompressed, cubemaps (can't read 3D DDS files yet)
+  o PSD - (from stb_image documentation)
+  o HDR - converted to LDR, unless loaded with *HDR* functions (RGBE or RGBdivA or RGBdivA2) 
+* Writeable Image Formats:
+  o TGA - Greyscale or RGB or RGBA, uncompressed
+  o BMP - RGB, uncompressed
+  o DDS - RGB as DXT1, or RGBA as DXT5 
+* Can load an image file directly into a 2D OpenGL texture, optionally performing the following functions:
+  o Can generate a new texture handle, or reuse one specified
+  o Can automatically rescale the image to the next largest power-of-two size
+  o Can automatically create MIPmaps
+  o Can scale (not simply clamp) the RGB values into the "safe range" for NTSC displays (16 to 235, as recommended here)
+  o Can multiply alpha on load (for more correct blending / compositing)
+  o Can flip the image vertically
+  o Can compress and upload any image as DXT1 or DXT5 (if EXT_texture_compression_s3tc is available), using an internal (very fast!) compressor
+  o Can convert the RGB to YCoCg color space (useful with DXT5 compression: see this link from NVIDIA)
+  o Will automatically downsize a texture if it is larger than GL_MAX_TEXTURE_SIZE
+  o Can directly upload DDS files (DXT1/3/5/uncompressed/cubemap, with or without MIPmaps). Note: directly uploading the compressed DDS image will disable the other options (no flipping, no pre-multiplying alpha, no rescaling, no creation of MIPmaps, no auto-downsizing)
+  o Can load rectangluar textures for GUI elements or splash screens (requires GL_ARB/EXT/NV_texture_rectangle) 
+* Can decompress images from RAM (e.g. via PhysicsFS or similar) into an OpenGL texture (same features as regular 2D textures, above)
+* Can load cube maps directly into an OpenGL texture (same features as regular 2D textures, above)
+  o Can take six image files directly into an OpenGL cube map texture
+  o Can take a single image file where width = 6*height (or vice versa), split it into an OpenGL cube map texture 
+* No external dependencies
+* Tiny
+* Cross platform (Windows, *nix, Mac OS X)
+* Public Domain 
 
 Usage:
+=======
 
 SOIL is meant to be used as a static library (as it's tiny and in the public domain). You can use the static library file included in the zip (libSOIL.a works for MinGW and Microsoft compilers...feel free to rename it to SOIL.lib if that makes you happy), or compile the library yourself. The code is cross-platform and has been tested on Windows, Linux, and Mac. (The heaviest testing has been on the Windows platform, so feel free to email me if you find any issues with other platforms.)
 
