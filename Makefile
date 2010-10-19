@@ -29,7 +29,7 @@ BIN = $(LIBDIR)/$(LIB)
 all: $(BIN)
 
 $(BIN): $(OBJ)
-	rm $(BIN)
+	$(DELETER) $(BIN)
 	ar r $(BIN) $(OBJ)
 	ranlib $(BIN)
 	@echo -------------------------------------------------------------------
