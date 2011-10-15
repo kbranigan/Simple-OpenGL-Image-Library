@@ -29,6 +29,7 @@ BIN = $(LIBDIR)/$(LIB)
 all: $(BIN)
 
 $(BIN): $(OBJ)
+	mkdir -p $(LIBDIR)
 	$(DELETER) $(BIN)
 	ar r $(BIN) $(OBJ)
 	ranlib $(BIN)
