@@ -2,7 +2,8 @@
 # Type 'make' then 'make install' to complete the installation of the library
 
 # For 'make install' to work, set LOCAL according to your system configuration
-LOCAL = /usr/local
+PREFIX = /usr/local
+LOCAL = $(PREFIX)
 
 LIB = libSOIL.a
 INC = SOIL.h
@@ -44,11 +45,17 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 clean:
 	$(DELETER) $(OBJ) $(BIN)
 
-install: $(BIN)
+$(LOCAL)/lib/:
+	mkdir $(LOCAL)/lib
+
+$(LOCAL)/include/:
+	mkdir $(LOCAL)/include
+
+install: $(BIN) $(LOCAL)/lib/ $(LOCAL)/include/
 	@echo Installing to: $(LOCAL)/lib and $(LOCAL)/include...
 	@echo -------------------------------------------------------------------
-	$(COPIER) $(BIN) $(LOCAL)/lib
-	$(COPIER) $(INCDIR)/$(INC) $(LOCAL)/include
+	$(COPIER) $(BIN) $(LOCAL)/lib/
+	$(COPIER) $(INCDIR)/$(INC) $(LOCAL)/include/
 	@echo -------------------------------------------------------------------
 	@echo SOIL library installed. Enjoy!
 
