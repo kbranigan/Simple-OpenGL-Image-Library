@@ -27,8 +27,14 @@
 	#include <GL/gl.h>
 #elif defined(__APPLE__) || defined(__APPLE_CC__)
 	/*	I can't test this Apple stuff!	*/
+    #include "TargetConditionals.h"
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+    #include <CoreFoundation/CFBundle.h>
+    #include <OpenGLES/ES3/gl.h>
+#else
 	#include <OpenGL/gl.h>
 	#include <Carbon/Carbon.h>
+#endif
 	#define APIENTRY
 #elif defined(__ANDROID__)
 	#include <GLES/gl.h>
@@ -45,6 +51,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 /*	error reporting	*/
 char *result_string_pointer = "SOIL initialized";
@@ -1943,10 +1950,10 @@ int query_cubemap_capability( void )
 		&&
 			(NULL == strstr( (char const*)glGetString( GL_EXTENSIONS ),
 				"GL_EXT_texture_cube_map" ) )
-			)
 		#ifdef GL_ES_VERSION_2_0
-		&& (false) /* GL ES 2.0 supports cubemaps, always enable */
+		&& (0) /* GL ES 2.0 supports cubemaps, always enable */
 		#endif
+        )
 		{
 			/*	not there, flag the failure	*/
 			has_cubemap_capability = SOIL_CAPABILITY_NONE;
