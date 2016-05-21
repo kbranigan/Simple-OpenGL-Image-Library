@@ -33,6 +33,8 @@
 #elif defined(__ANDROID__)
 	#include <GLES/gl.h>
 	#define APIENTRY
+#elif defined(__EMSCRIPTEN__)
+	#include <GL/gl.h>
 #else
 	#include <GL/gl.h>
 	#include <GL/glx.h>
@@ -2006,7 +2008,7 @@ int query_DXT_capability( void )
 				CFRelease( bundleURL );
 				CFRelease( extensionName );
 				CFRelease( bundle );
-			#elif defined(__ANDROID__)
+			#elif defined(__ANDROID__) || defined(__EMSCRIPTEN__)
 				ext_addr = (P_SOIL_GLCOMPRESSEDTEXIMAGE2DPROC)(glCompressedTexImage2D);
 			#else
 				ext_addr = (P_SOIL_GLCOMPRESSEDTEXIMAGE2DPROC)
