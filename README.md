@@ -12,11 +12,11 @@ Features:
   * TGA - greyscale or RGB or RGBA or indexed, uncompressed or RLE
   * DDS - DXT1/2/3/4/5, uncompressed, cubemaps (can't read 3D DDS files yet)
   * PSD - (from stb_image documentation)
-  * HDR - converted to LDR, unless loaded with *HDR* functions (RGBE or RGBdivA or RGBdivA2) 
+  * HDR - converted to LDR, unless loaded with *HDR* functions (RGBE or RGBdivA or RGBdivA2)
 * Writeable Image Formats:
   * TGA - Greyscale or RGB or RGBA, uncompressed
   * BMP - RGB, uncompressed
-  * DDS - RGB as DXT1, or RGBA as DXT5 
+  * DDS - RGB as DXT1, or RGBA as DXT5
 * Can load an image file directly into a 2D OpenGL texture, optionally performing the following functions:
   * Can generate a new texture handle, or reuse one specified
   * Can automatically rescale the image to the next largest power-of-two size
@@ -28,24 +28,24 @@ Features:
   * Can convert the RGB to YCoCg color space (useful with DXT5 compression: see this link from NVIDIA)
   * Will automatically downsize a texture if it is larger than GL_MAX_TEXTURE_SIZE
   * Can directly upload DDS files (DXT1/3/5/uncompressed/cubemap, with or without MIPmaps). Note: directly uploading the compressed DDS image will disable the other options (no flipping, no pre-multiplying alpha, no rescaling, no creation of MIPmaps, no auto-downsizing)
-  * Can load rectangluar textures for GUI elements or splash screens (requires GL_ARB/EXT/NV_texture_rectangle) 
+  * Can load rectangluar textures for GUI elements or splash screens (requires GL_ARB/EXT/NV_texture_rectangle)
 * Can decompress images from RAM (e.g. via PhysicsFS or similar) into an OpenGL texture (same features as regular 2D textures, above)
 * Can load cube maps directly into an OpenGL texture (same features as regular 2D textures, above)
   * Can take six image files directly into an OpenGL cube map texture
-  * Can take a single image file where width = 6*height (or vice versa), split it into an OpenGL cube map texture 
+  * Can take a single image file where width = 6*height (or vice versa), split it into an OpenGL cube map texture
 * No external dependencies
 * Tiny
 * Cross platform (Windows, *nix, Mac OS X)
-* Public Domain 
+* Public Domain
 
 Usage:
 =======
 
-SOIL is meant to be used as a static library (as it's tiny and in the public domain). You can use the static library file included in the zip (libSOIL.a works for MinGW and Microsoft compilers...feel free to rename it to SOIL.lib if that makes you happy), or compile the library yourself. The code is cross-platform and has been tested on Windows, Linux, and Mac. (The heaviest testing has been on the Windows platform, so feel free to email me if you find any issues with other platforms.)
+SOIL is meant to be used as a static library (as it's tiny and in the public domain). You can use the static library file included in the zip (libSOIL.a works for MinGW and Microsoft compilers, feel free to rename it to SOIL.lib if that makes you happy), or compile the library yourself. The code is cross-platform and has been tested on Windows, Linux, and Mac. (The heaviest testing has been on the Windows platform, so feel free to email me if you find any issues with other platforms.)
 
-Simply include SOIL.h in your C or C++ file, link in the static library, and then use any of SOIL's functions. The file SOIL.h contains simple doxygen style documentation. (If you use the static library, no other header files are needed besides SOIL.h) Below are some simple usage examples:
+Simply include SOIL.h in your C or C++ file, link the static library, and then use any of SOIL's functions. The file SOIL.h contains simple doxygen style documentation. (If you use the static library, no other header files are needed besides SOIL.h) Below are some simple usage examples:
 
-load an image file directly as a new OpenGL texture
+Load an image into a new OpenGL texture
 
     GLuint tex_2d = SOIL_load_OGL_texture
     (
@@ -55,14 +55,14 @@ load an image file directly as a new OpenGL texture
       SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
     );
 
-check for an error during the load process
+Check for errors during the load process
 
     if( 0 == tex_2d )
     {
       printf( "SOIL loading error: '%s'\n", SOIL_last_result() );
     }
 
-load another image, but into the same texture ID, overwriting the last one
+Load another image, but into the same texture ID, overwriting the last one
 
     tex_2d = SOIL_load_OGL_texture
     (
@@ -72,7 +72,7 @@ load another image, but into the same texture ID, overwriting the last one
       SOIL_FLAG_DDS_LOAD_DIRECT
     );
 
-load 6 images into a new OpenGL cube map, forcing RGB
+Load 6 images into a new OpenGL cube map, forcing RGB
 
     GLuint tex_cube = SOIL_load_OGL_cubemap
     (
@@ -87,8 +87,7 @@ load 6 images into a new OpenGL cube map, forcing RGB
       SOIL_FLAG_MIPMAPS
     );
 
-load and split a single image into a new OpenGL cube map, default format
-face order = East South West North Up Down => "ESWNUD", case sensitive!
+Load a single image with a 6:1 aspect ratio into a new OpenGL cube map. The default face order is `East, South, West, North, Up, Down`, represented by the string ``"ESWNUD"`` (case sensitive!)
 
     GLuint single_tex_cube = SOIL_load_OGL_single_cubemap
     (
@@ -99,9 +98,7 @@ face order = East South West North Up Down => "ESWNUD", case sensitive!
       SOIL_FLAG_MIPMAPS
     );
 
-actually, load a DDS cubemap over the last OpenGL cube map, default format
-try to load it directly, but give the order of the faces in case that fails
-the DDS cubemap face order is pre-defined as SOIL_DDS_CUBEMAP_FACE_ORDER
+Load a DDS cubemap, overwriting the one stored in `single_tex_cube`. The default DDS cubemap face order is defined as `SOIL_DDS_CUBEMAP_FACE_ORDER`
 
     single_tex_cube = SOIL_load_OGL_single_cubemap
     (
@@ -112,47 +109,49 @@ the DDS cubemap face order is pre-defined as SOIL_DDS_CUBEMAP_FACE_ORDER
       SOIL_FLAG_MIPMAPS | SOIL_FLAG_DDS_LOAD_DIRECT
     );
 
-load an image as a heightmap, forcing greyscale (so channels should be 1)
+Load an image as a heightmap, forcing greyscale (channels will be set to 1 on successful load)
 
     int width, height, channels;
-    unsigned char *ht_map = SOIL_load_image
+    unsigned char *height_map = SOIL_load_image
     (
       "terrain.tga",
       &width, &height, &channels,
       SOIL_LOAD_L
     );
 
-save that image as another type
+Save that image as another type
 
     int save_result = SOIL_save_image
     (
       "new_terrain.dds",
       SOIL_SAVE_TYPE_DDS,
       width, height, channels,
-      ht_map
+      height_map
     );
 
-save a screenshot of your awesome OpenGL game engine, running at 1024x768
+Save a screenshot of your awesome OpenGL game engine, running at 1024x768
 
-    save_result = SOIL_save_screenshot
+    int save_result = SOIL_save_screenshot
     (
       "awesomenessity.bmp",
       SOIL_SAVE_TYPE_BMP,
       0, 0, 1024, 768
     );
 
-loaded a file via PhysicsFS, need to decompress the image from RAM,
-where it's in a buffer: unsigned char *image_in_RAM
+Convert data in memory to an OpenGL texture
+
+    unsigned char *image_in_RAM = ... // Load data from somewhere
+    int image_size_in_bytes = ... // Calculate size of image in bytes
 
     GLuint tex_2d_from_RAM = SOIL_load_OGL_texture_from_memory
     (
       image_in_RAM,
-      image_in_RAM_bytes,
+      image_size_in_bytes,
       SOIL_LOAD_AUTO,
       SOIL_CREATE_NEW_ID,
       SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT
     );
 
-done with the heightmap, free up the RAM
+When done with the heightmap, free the memory to prevent memory leaks
 
     SOIL_free_image_data( ht_map );
