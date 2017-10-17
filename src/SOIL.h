@@ -362,7 +362,7 @@ int
 	the resulting image has force_channels, but *channels may be
 	different (if the original image had a different channel
 	count).
-	\return 0 if failed, otherwise returns 1
+	\return NULL if failed, otherwise returns a pointer to start of image data
 **/
 unsigned char*
 	SOIL_load_image
@@ -379,7 +379,7 @@ unsigned char*
 	the resulting image has force_channels, but *channels may be
 	different (if the original image had a different channel
 	count).
-	\return 0 if failed, otherwise returns 1
+	\return NULL if failed, otherwise returns a pointer to start of image data
 **/
 unsigned char*
 	SOIL_load_image_from_memory
@@ -415,10 +415,10 @@ void
 	);
 
 /**
-	This function resturn a pointer to a string describing the last thing
-	that happened inside SOIL.  It can be used to determine why an image
-	failed to load.
-**/
+	Returns a c string (const char*) describing the last SOIL event.
+	It can be used to determine why an image failed to load.
+	\return a c string containing a short description of the last SOIL event
+	**/
 const char*
 	SOIL_last_result
 	(

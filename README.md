@@ -109,7 +109,7 @@ Load a DDS cubemap, overwriting the one stored in `single_tex_cube`. The default
       SOIL_FLAG_MIPMAPS | SOIL_FLAG_DDS_LOAD_DIRECT
     );
 
-Load an image as a heightmap, forcing greyscale (channels will be set to 1 on successful load)
+Load an image as a heightmap, forcing greyscale. (channels will be set to the original channel count of the image)
 
     int width, height, channels;
     unsigned char *height_map = SOIL_load_image
