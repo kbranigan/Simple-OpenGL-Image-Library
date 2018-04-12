@@ -41,3 +41,4 @@ Release*
 *VC.db
 *.vcxproj
 *.vcxproj.filters
+*.depend
