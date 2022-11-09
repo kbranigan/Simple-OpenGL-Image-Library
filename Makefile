@@ -13,8 +13,7 @@ LIBDIR = lib
 INCDIR = src
 OBJDIR = obj
 
-CXX = gcc
-CXXFLAGS = -O2 -s -Wall
+CFLAGS ?= -O2 -s -Wall
 DELETER = rm -f
 COPIER = cp
 
@@ -39,7 +38,7 @@ $(BIN): $(OBJ)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 
 clean:
